@@ -1,4 +1,5 @@
 #!/bin/sh
+exit 0
 buildd=$1
 if test ! -f "$buildd/heroku.txt"
 then
@@ -9,10 +10,12 @@ fi
 contents=`cat "$buildd/heroku.txt"`
 appn=`echo $contents | cut -d ' ' -f1`
 port=`echo $contents | cut -d ' ' -f2`
+echo "Specified app is $appn"
 if test "$port" = ""
 then
 	port=5050
 fi
+echo "Specified port is $port"
 
 if test ! -f "$buildd/$appn"
 then
