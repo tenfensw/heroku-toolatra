@@ -6,7 +6,7 @@ cat << EOF
 ---
 config_vars:
    TOOLATRA_FORCEDPORT: $PORT
-   PATH: /app/final/bin:/usr/bin:/bin:/usr/local/bin:/usr/sbin
+   PATH: /usr/bin:/bin:/usr/local/bin:/usr/sbin
 default_process_types:
-   web: tclsh $appn
+   web: /app/.buildpack/tclsh/final/bin/tclsh $appn
 EOF

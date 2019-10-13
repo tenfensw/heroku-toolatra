@@ -8,8 +8,9 @@ This buildpack allows you to deploy your Tcl+Toolatra applications in a simple m
 
 [source,bash]
 ----
-$ heroku create mytoolatraapp -s cedar
-$ heroku config:add BUILDPACK_URL=https://github.com/timkoi/heroku-toolatra.git
+$ heroku create test-toolatra-tcl-heroku -s cedar --buildpack https://github.com/timkoi/heroku-toolatra.git 
+$ git init
+$ git remote add origin https://git.heroku.com/test-toolatra-tcl-heroku.git
 ----
 
 2. Write your app
@@ -36,6 +37,7 @@ $ echo 'app.tcl 5050' > heroku.txt
 [source,bash]
 ----
 $ heroku login
-$ git push heroku master
+$ git add . && git commit -m 'added everything'
+$ git push -u origin master
 ----
 
