@@ -26,6 +26,5 @@ appn=`cat heroku.txt | cut -d ' ' -f1`
 
 echo '-----> Deploy complete!'
 echo '-----> Running ' $appn ' via tclsh'
-$vd/final/bin/tclsh $appn
 
 exit $?

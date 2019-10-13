@@ -1,0 +1,12 @@
+#!/bin/sh
+BUILD_DIR=$1
+appn=`cat "$BUILD_DIR/heroku.txt" | cut -d ' ' -f1`
+
+cat << EOF
+---
+config_vars:
+   TOOLATRA_FORCEDPORT: $PORT
+   PATH: /app/final/bin:/usr/bin:/bin:/usr/local/bin:/usr/sbin
+default_process_types:
+   web: tclsh $appn
+EOF
