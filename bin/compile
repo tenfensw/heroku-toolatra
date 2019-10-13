@@ -1,0 +1,31 @@
+#!/bin/sh -e
+buildd=$1
+cached=$2
+
+echo '-----> Tcl/Toolatra web application deployment on Heroku started'
+
+tcl_remote='http://testmakerplusofficial.000webhostapp.com/opensource/ActiveTcl-8.6.9.8609.2-x86_64-linux-glibc-2.5.tar.gz'
+vd=$buildd/.buildpack/tclsh
+
+if test ! -x $vd/final/bin/tclsh
+then
+	echo '-----> First run preparations: installing ActiveTcl 8.6 (this might take a while)'
+	mkdir -v -p $vd/src
+	curl -s -o - $tcl_remote | tar -C $vd/src --strip-components=1 -xzf -
+	sh $vd/src/install.sh --directory $vd/final
+	rm -r -f $vd/src
+fi
+
+cd $buildd
+echo '-----> Upgrading to latest stable Toolatra'
+curl https://raw.githubusercontent.com/timkoi/toolatra/master/toolatra_http.tcl > toolatra_http.tcl
+curl https://raw.githubusercontent.com/timkoi/toolatra/master/toolatra_templates.tcl > toolatra_templates.tcl
+
+echo '-----> Detecting app'
+appn=`cat heroku.txt | cut -d ' ' -f1`
+
+echo '-----> Deploy complete!'
+echo '-----> Running ' $appn ' via tclsh'
+$vd/final/bin/tclsh $appn
+
+exit $?

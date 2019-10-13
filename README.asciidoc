@@ -1,0 +1,41 @@
+= Toolatra buildpack for Heroku
+
+This buildpack allows you to deploy your Tcl+Toolatra applications in a simple manner.
+
+== Usage
+
+1. Create your Heroku app
+
+[source,bash]
+----
+$ heroku create mytoolatraapp -s cedar
+$ heroku config:add BUILDPACK_URL=https://github.com/timkoi/heroku-toolatra.git
+----
+
+2. Write your app
+
+[source,bash]
+----
+$ echo 'source toolatra_http.tcl; get / { render "hello there" }; run' > app.tcl
+----
+
+3. Generate ``heroku.txt``. It must contain one line. The line must contain:
+[squares]
+- the name of the entry point of the app (the kickstart file), in our case it is ``app.tcl``
+- the port on which the app is running (choose 5050 if unsure)
+
+Example:
+
+[source,bash]
+----
+$ echo 'app.tcl 5050' > heroku.txt
+----
+
+4. Deploy everything
+
+[source,bash]
+----
+$ heroku login
+$ git push heroku master
+----
+

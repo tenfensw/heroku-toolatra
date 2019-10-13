@@ -1,0 +1,23 @@
+#!/bin/sh
+buildd=$1
+if test ! -f "$buildd/heroku.txt"
+then
+	printf 'heroku.txt is missing inside "%s", please see http://timkoi.gitlab.io/toolatra/heroku for more info.\n' $buildd
+	exit 1
+fi
+
+contents=`cat "$buildd/heroku.txt"`
+appn=`echo $contents | cut -d ' ' -f1`
+port=`echo $contents | cut -d ' ' -f2`
+if test "$port" = ""
+then
+	port=5050
+fi
+
+if test ! -f "$buildd/$appn"
+then
+	printf 'The specified kickstart file %s does not exist.\n' $appn
+	exit 2
+fi
+
+exit 0
