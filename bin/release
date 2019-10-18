@@ -7,5 +7,5 @@ cat << EOF
 config_vars:
    PATH: /app/.buildpack/tclsh/final/bin:/usr/bin:/bin:/usr/local/bin:/usr/sbin
 default_process_types:
-   web: sh -c "TOOLATRA_FORCEDPORT=\$PORT LD_LIBRARY_PATH=/app/.buildpack/tclsh/final/lib /app/.buildpack/tclsh/final/bin/tclsh $appn"
+   web: sh -c "cd /app && TOOLATRA_FORCEDPORT=\$PORT LD_LIBRARY_PATH=./.buildpack/tclsh/final/lib ./.buildpack/tclsh/final/bin/tclsh heroku-toolatra-entrypoint.tcl"
 EOF

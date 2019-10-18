@@ -18,13 +18,19 @@ fi
 
 cd $buildd
 echo '-----> Upgrading to latest stable Toolatra'
-curl https://raw.githubusercontent.com/timkoi/toolatra/master/toolatra_http.tcl > toolatra_http.tcl
-curl https://raw.githubusercontent.com/timkoi/toolatra/master/toolatra_templates.tcl > toolatra_templates.tcl
+mkdir toolatra-packaged
+curl https://raw.githubusercontent.com/timkoi/toolatra/master/toolatra_http.tcl > toolatra-packaged/toolatra_http.tcl
+curl https://raw.githubusercontent.com/timkoi/toolatra/master/toolatra_templates.tcl > toolatra-packaged/toolatra_templates.tcl
+curl https://raw.githubusercontent.com/timkoi/toolatra/master/pkgIndex.tcl > toolatra-packaged/pkgIndex.tcl
+for fn in toolatra_http.tcl toolatra_templates.tcl
+do
+	ln -v -s toolatra-packaged/$fn ./$fn
+done
 
 echo '-----> Detecting app'
 appn=`cat heroku.txt | cut -d ' ' -f1`
+echo 'lappend auto_path /app/toolatra-packaged; source ' $appn > heroku-toolatra-entrypoint.tcl
 
 echo '-----> Deploy complete!'
-echo '-----> Running ' $appn ' via tclsh'
 
 exit $?
