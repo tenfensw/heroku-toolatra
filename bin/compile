@@ -32,6 +32,12 @@ echo '-----> Detecting app'
 appn=`cat heroku.txt | cut -d ' ' -f1`
 echo 'lappend auto_path /app/toolatra-packaged; global thisIsHeroku; set thisIsHeroku 1; source ' $appn > heroku-toolatra-entrypoint.tcl
 
+if test -x "$buildd/heroku.sh"
+then
+	echo '-----> Detected heroku.sh - a runnable post-config script'
+	sh "$buildd/heroku.sh" $buildd || echo '-----> Script failed, continuing anyway'
+fi
+
 echo '-----> Deploy complete!'
 
 exit $?
