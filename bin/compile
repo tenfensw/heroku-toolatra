@@ -3,7 +3,7 @@ buildd=$1
 cached=$2
 
 echo '-----> Tcl/Toolatra web application deployment on Heroku started'
-echo '-----> Deploy script v3'
+echo '-----> Deploy script v4'
 
 tcl_remote='http://testmakerplusofficial.000webhostapp.com/opensource/ActiveTcl-8.6.9.8609.2-x86_64-linux-glibc-2.5.tar.gz'
 vd=$buildd/.buildpack/tclsh
@@ -32,10 +32,10 @@ echo '-----> Detecting app'
 appn=`cat heroku.txt | cut -d ' ' -f1`
 echo 'lappend auto_path /app/toolatra-packaged; global thisIsHeroku; set thisIsHeroku 1; source ' $appn > heroku-toolatra-entrypoint.tcl
 
-if test -x "$buildd/heroku.sh"
+if test -f 'heroku.sh'
 then
 	echo '-----> Detected heroku.sh - a runnable post-config script'
-	sh "$buildd/heroku.sh" $buildd || echo '-----> Script failed, continuing anyway'
+	sh heroku.sh $buildd || echo '-----> Script failed, continuing anyway'
 fi
 
 echo '-----> Deploy complete!'
